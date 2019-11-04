@@ -17,15 +17,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.io.IOException;
 
 @Configuration
 @EnableBatchProcessing
 public class SpringbatchPartitionConfig {
 
-    @Value("input/*")
-    public Resource[] inputResources;
+    @Autowired
+    ResourcePatternResolver resoursePatternResolver;
 
     @Autowired
     private JobBuilderFactory jobs;
@@ -61,7 +64,15 @@ public class SpringbatchPartitionConfig {
     @Bean
     public CustomMultiResourcePartitioner partitioner() {
         CustomMultiResourcePartitioner partitioner = new CustomMultiResourcePartitioner();
-        partitioner.setResources(inputResources);
+        Resource[] inputResources = null;
+        for(String arg : SpringbatchPartitionerApp.ARGS) {
+            try {
+                inputResources = resoursePatternResolver.getResources("input/" + arg);
+                partitioner.setResources(inputResources);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return partitioner;
     }
 

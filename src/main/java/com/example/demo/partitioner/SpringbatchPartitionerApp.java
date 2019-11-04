@@ -9,8 +9,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 @SpringBootApplication
 public class SpringbatchPartitionerApp {
+    public static String[] ARGS;
 
     public static void main(String[] args) {
+        ARGS = args;
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(SpringbatchPartitionConfig.class);
         context.refresh();
