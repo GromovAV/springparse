@@ -42,3 +42,10 @@ mvn clean install
 Например, вместо числа в файле может быть строковое значение в поле amount.
 8. Разрешается использовать инструменты языка не выше Java 8.
 9. Необходимо учесть возможность добавления новых форматов входящих данных. Например: XLSX
+
+## Пояснения
+* Сборка выполняется mvn clean install
+* Исполняемый файл demo.jar появляется в директории demo\out\artifacts\demo_jar
+* Входные файлы находятся в директории demo\src\main\resources
+* Запуск из консоли java -jar demo.jar orders1.csv orders2.json
+* Параметров для запуска может быть любое количество файлов java -jar demo.jar orders1.csv orders2.json orders3.csv orders1.json
