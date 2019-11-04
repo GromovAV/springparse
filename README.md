@@ -44,7 +44,7 @@ mvn clean install
 9. Необходимо учесть возможность добавления новых форматов входящих данных. Например: XLSX
 
 ## Пояснения
-* Сборка выполняется mvn clean install
+* Сборка выполняется mvn clean package install
 * Исполняемый файл demo-orders.jar появляется в директории target
 * Входные файлы находятся в директории src\main\resources
 * Запуск из консоли java -jar demo-orders.jar orders1.csv orders2.json
