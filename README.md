@@ -45,7 +45,7 @@ mvn clean install
 
 ## Пояснения
 * Сборка выполняется mvn clean install
-* Исполняемый файл demo.jar появляется в директории out\artifacts\demo_jar
+* Исполняемый файл demo-orders.jar появляется в директории target
 * Входные файлы находятся в директории src\main\resources
-* Запуск из консоли java -jar demo.jar orders1.csv orders2.json
-* Параметров для запуска может быть любое количество файлов java -jar demo.jar orders1.csv orders2.json orders3.csv orders1.json
+* Запуск из консоли java -jar demo-orders.jar orders1.csv orders2.json
+* Параметров для запуска может быть любое количество файлов java -jar demo-orders.jar orders1.csv orders2.json orders3.csv orders1.json
