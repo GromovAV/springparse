@@ -1,0 +1,8 @@
+{"orderId":1,"amount":1000,"currency":"USD","comment":"оплата заказа"}
+{"orderId":2,"amount":100,"currency":"USD","comment":"оплата заказа"}
+{"orderId":3,"amount":2000,"currency":"RUB","comment":"оплата заказа"}
+{"orderId":4,"amount":3000,"currency":"USD","comment":"оплата заказа"}
+{"orderId":5,"amount":3000,"currency":"USD","comment":"оплата заказа"}
+{"orderId":6,"amount":5000,"currency":"RUB","comment":"не оплата заказа"}
+{"orderId":7,"amount":3000,"currency":"USD","comment":"оплата заказа"}
+{"orderId":8,"amount":3000,"currency":"RUB","comment":"оплата заказа"}
