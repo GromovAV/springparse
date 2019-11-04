@@ -5,10 +5,10 @@ import org.springframework.batch.item.file.LineMapper;
 
 import java.util.ArrayList;
 
-public class TransactionCsvLineMapper implements LineMapper<Transaction> {
+public class TransactionLineMapper implements LineMapper<Transaction> {
     private String delegator;
 
-    public TransactionCsvLineMapper(String delegator) {
+    public TransactionLineMapper(String delegator) {
         this.delegator = delegator;
     }
 
@@ -18,7 +18,12 @@ public class TransactionCsvLineMapper implements LineMapper<Transaction> {
         ArrayList<String> fieldList = new ArrayList<>();
 
         for (int i = 0; i < fields.length; i++) {
-            fieldList.add(fields[i].replaceAll("\"", ""));
+            fieldList.add(fields[i]
+                    .replaceAll("\\p{Punct}", "")
+                    .replaceAll("orderId","")
+                    .replaceAll("amount","")
+                    .replaceAll("currency","")
+                    .replaceAll("comment", ""));
         }
 
         Transaction transaction = new Transaction();

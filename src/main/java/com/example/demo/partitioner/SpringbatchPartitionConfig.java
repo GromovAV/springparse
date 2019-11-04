@@ -2,15 +2,13 @@ package com.example.demo.partitioner;
 
 import com.example.demo.SpringbatchApp;
 import com.example.demo.model.Transaction;
-import com.example.demo.service.TransactionCsvLineMapper;
-import com.example.demo.service.TransactionJsonLineMapper;
+import com.example.demo.service.TransactionLineMapper;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,14 +81,7 @@ public class SpringbatchPartitionConfig {
     public FlatFileItemReader<Transaction> itemReader(@Value("#{stepExecutionContext[fileName]}") String filename){
         FlatFileItemReader<Transaction> reader = new FlatFileItemReader<>();
         reader.setResource(new ClassPathResource(filename));
-
-        if(filename.contains(".csv")){
-            reader.setLineMapper(new TransactionCsvLineMapper(filename));
-        }
-        else {
-            reader.setLineMapper(new TransactionJsonLineMapper(filename));
-        }
-
+        reader.setLineMapper(new TransactionLineMapper(filename));
         return reader;
     }
 
