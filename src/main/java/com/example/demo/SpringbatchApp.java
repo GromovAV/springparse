@@ -1,5 +1,6 @@
-package com.example.demo.partitioner;
+package com.example.demo;
 
+import com.example.demo.partitioner.SpringbatchPartitionConfig;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -8,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 @SpringBootApplication
-public class SpringbatchPartitionerApp {
+public class SpringbatchApp {
     public static String[] ARGS;
 
     public static void main(String[] args) {
