@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.core.io.Resource;
-import org.springframework.util.Assert;
 
 public class CustomMultiResourcePartitioner implements Partitioner {
 
@@ -30,7 +29,6 @@ public class CustomMultiResourcePartitioner implements Partitioner {
         for (Resource[] resource : resources) {
             for (Resource res: resource) {
                 ExecutionContext context = new ExecutionContext();
-                Assert.state(res.exists(), "Resource does not exist: " + resource);
                 context.putString(keyName, res.getFilename());
                 map.put(PARTITION_KEY + i, context);
                 i++;
