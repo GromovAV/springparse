@@ -15,11 +15,16 @@ public class CustomMultiResourcePartitioner implements Partitioner {
     private static final String PARTITION_KEY = "partition";
 
     private ArrayList<Resource[]> resources = new ArrayList<Resource[]>();
+    private ArrayList<String> paths = new ArrayList<String>();
 
     private String keyName = DEFAULT_KEY_NAME;
 
     public void setResources(Resource[] resources) {
         this.resources.add(resources);
+    }
+
+    public void setPath(String path) {
+        this.paths.add(path);
     }
 
     @Override
@@ -29,7 +34,7 @@ public class CustomMultiResourcePartitioner implements Partitioner {
         for (Resource[] resource : resources) {
             for (Resource res: resource) {
                 ExecutionContext context = new ExecutionContext();
-                context.putString(keyName, res.getFilename());
+                context.putString(keyName, paths.get(i));
                 map.put(PARTITION_KEY + i, context);
                 i++;
             }

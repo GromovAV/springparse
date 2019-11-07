@@ -15,12 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.io.File;
 import java.io.IOException;
 
 @Configuration
@@ -64,13 +65,17 @@ public class SpringbatchPartitionConfig {
     @Bean
     public CustomMultiResourcePartitioner partitioner() {
         CustomMultiResourcePartitioner partitioner = new CustomMultiResourcePartitioner();
-        Resource[] inputResources = null;
+        Resource[] inputResources;
         for(String arg : SpringbatchApp.ARGS) {
             try {
                 inputResources = resoursePatternResolver.getResources(arg);
+                File file = new File(arg);
+                String filePath = file.getCanonicalPath();
+                partitioner.setPath(filePath);
                 partitioner.setResources(inputResources);
             } catch (IOException e) {
                 e.printStackTrace();
+                System.exit(0);
             }
         }
         return partitioner;
@@ -80,7 +85,7 @@ public class SpringbatchPartitionConfig {
     @StepScope
     public FlatFileItemReader<Transaction> itemReader(@Value("#{stepExecutionContext[fileName]}") String filename){
         FlatFileItemReader<Transaction> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource(filename));
+        reader.setResource(new FileSystemResource(filename));
         reader.setLineMapper(new TransactionLineMapper(filename));
         return reader;
     }

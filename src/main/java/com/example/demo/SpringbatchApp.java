@@ -23,7 +23,10 @@ public class SpringbatchApp {
         try {
           JobExecution execution = jobLauncher.run(job, new JobParameters());
         } catch (Exception e) {
+            context.close();
             e.printStackTrace();
         }
+        finally{
+            context.close(); }
     }
 }

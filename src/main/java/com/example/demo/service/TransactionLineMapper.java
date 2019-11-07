@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.model.Transaction;
 import org.springframework.batch.item.file.LineMapper;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class TransactionLineMapper implements LineMapper<Transaction> {
@@ -32,7 +33,9 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
         transaction.setCurrency(fieldList.get(2));
         transaction.setComment(fieldList.get(3));
         transaction.setLine(lineNumber);
-        transaction.setFilename(delegator);
+
+        File file = new File(delegator);
+        transaction.setFilename(file.getName());
 
         try{
             transaction.setAmount(Integer.parseInt(fieldList.get(1)));
