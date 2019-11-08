@@ -17,6 +17,7 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
     public Transaction mapLine(String line, int lineNumber){
         String[] fields = line.split(",");
         ArrayList<String> fieldList = new ArrayList<>();
+        String resultError = " ";
 
         for (int i = 0; i < fields.length; i++) {
             fieldList.add(fields[i]
@@ -24,19 +25,16 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
                     .replaceAll("orderId","")
                     .replaceAll("amount","")
                     .replaceAll("currency","")
-                    .replaceAll("comment", "")
-                    .replaceAll("]","")
-                    .replaceAll("\\[",""));
+                    .replaceAll("comment", ""));
         }
 
-        String resultError = " ";
         Transaction transaction = new Transaction();
 
         try{
             transaction.setOrderid(Integer.parseInt(fieldList.get(0).trim()));
         }
         catch (Exception e){
-            resultError += " Ошибка в исходном файле orderId = " + fieldList.get(0);
+            resultError += "Ошибка в исходном файле orderId = " + fieldList.get(0);
         }
 
         try{
@@ -44,7 +42,7 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
         }
         catch (Exception e){
             transaction.setCurrency("Not currency");
-            resultError += " Ошибка в исходном файле currency = Not currency ";
+            resultError += "Ошибка в исходном файле currency = Not currency ";
         }
 
         try{
@@ -52,7 +50,7 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
         }
         catch (Exception e){
             transaction.setComment("Not comment");
-            resultError += " Ошибка в исходном файле comment = Not comment ";
+            resultError += "Ошибка в исходном файле comment = Not comment ";
         }
 
         transaction.setLine(lineNumber);
@@ -65,10 +63,10 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
         }
         catch (Exception e){
             if(fieldList.size() >= 2){
-                resultError += " Ошибка в исходном файле amount = " + fieldList.get(1);
+                resultError += "Ошибка в исходном файле amount = " + fieldList.get(1);
             }
             else {
-                resultError += " Ошибка в исходном файле amount = Not amount ";
+                resultError += "Ошибка в исходном файле amount = Not amount ";
             }
         }
 

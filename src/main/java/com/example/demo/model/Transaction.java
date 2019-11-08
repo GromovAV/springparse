@@ -68,11 +68,12 @@ public class Transaction{
 
     @Override
     public String toString() {
-        String stringAmount = "amount: " + amount + ",";
+        String stringAmount = " amount: " + amount + ",";
         if (amount == -1) stringAmount = "";
         String  stringOrderId = "id: " + orderid+",";
         if (orderid == -1) stringOrderId= "";
-        return "{" + stringOrderId + stringAmount + "comment: "  + comment  +
-        ", filename: " + filename + ", line: " + line + ", result: " + result + "}";
+
+        return "{" + stringOrderId + stringAmount + " comment: "  + comment  +
+        ", filename: " + filename + ", line: " + line + ", result:" + result + "}";
     }
 }
