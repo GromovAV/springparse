@@ -2,8 +2,8 @@ package com.example.demo.model;
 
 @SuppressWarnings("restriction")
 public class Transaction{
-    private int orderid = 0;
-    private int amount = 0;
+    private int orderid = -1;
+    private int amount = -1;
     private String currency;
     private String comment;
     private String filename;
@@ -68,17 +68,11 @@ public class Transaction{
 
     @Override
     public String toString() {
-        if(amount == 0){
-            return "{id: " + orderid + ", comment: " + comment  +
-                    ", filename: " + filename + ", line: " + line + ", result: " + result + "}";
-        }
-        else if(orderid == 0){
-            return "{" + "amount: " + amount + ", comment: " + comment  +
-                    ", filename: " + filename + ", line: " + line + ", result: " + result + "}";
-        }
-        else {
-            return "{id: " + orderid + ", amount: " + amount + ", comment: " + comment  +
-                    ", filename: " + filename + ", line: " + line + ", result: " + result + "}";
-        }
+        String stringAmount = "amount: " + amount + ",";
+        if (amount == -1) stringAmount = "";
+        String  stringOrderId = "id: " + orderid+",";
+        if (orderid == -1) stringOrderId= "";
+        return "{" + stringOrderId + stringAmount + "comment: "  + comment  +
+        ", filename: " + filename + ", line: " + line + ", result: " + result + "}";
     }
 }
