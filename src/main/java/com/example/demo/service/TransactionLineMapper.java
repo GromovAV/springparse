@@ -28,20 +28,47 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
         }
 
         Transaction transaction = new Transaction();
-        transaction.setOrderid(Integer.parseInt(fieldList.get(0)));
+
         transaction.setResult("OK");
-        transaction.setCurrency(fieldList.get(2));
-        transaction.setComment(fieldList.get(3));
+
+        try{
+            transaction.setOrderid(Integer.parseInt(fieldList.get(0).trim()));
+        }
+        catch (Exception e){
+            transaction.setResult("Ошибка в исходном файле orderId = " + fieldList.get(0));
+        }
+
+        try{
+            transaction.setCurrency(fieldList.get(2));
+        }
+        catch (Exception e){
+            transaction.setCurrency("Not currency");
+            transaction.setResult("Ошибка в исходном файле currency = Not currency");
+        }
+
+        try{
+            transaction.setComment(fieldList.get(3));
+        }
+        catch (Exception e){
+            transaction.setComment("Not comment");
+            transaction.setResult("Ошибка в исходном файле comment = Not comment");
+        }
+
         transaction.setLine(lineNumber);
 
         File file = new File(delegator);
         transaction.setFilename(file.getName());
 
         try{
-            transaction.setAmount(Integer.parseInt(fieldList.get(1)));
+            transaction.setAmount(Integer.parseInt(fieldList.get(1).trim()));
         }
         catch (Exception e){
-            transaction.setResult("Ошибка в исходном файле amount= " + fieldList.get(1));
+            if(fieldList.size() >= 2){
+                transaction.setResult("Ошибка в исходном файле amount = " + fieldList.get(1));
+            }
+            else {
+                transaction.setResult("Ошибка в исходном файле amount = Not amount");
+            }
         }
 
         return  transaction;
