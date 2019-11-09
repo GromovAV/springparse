@@ -2,6 +2,7 @@ package com.example.demo.partitioner;
 
 import com.example.demo.SpringbatchApp;
 import com.example.demo.model.Transaction;
+import com.example.demo.service.ComplexJsonRecordSeparatorPolicy;
 import com.example.demo.service.TransactionLineMapper;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -11,6 +12,8 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.separator.JsonRecordSeparatorPolicy;
+import org.springframework.batch.item.file.separator.RecordSeparatorPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -86,8 +89,15 @@ public class SpringbatchPartitionConfig {
     public FlatFileItemReader<Transaction> itemReader(@Value("#{stepExecutionContext[fileName]}") String filename){
         FlatFileItemReader<Transaction> reader = new FlatFileItemReader<>();
         reader.setResource(new FileSystemResource(filename));
+        if (filename.contains(".json")) reader.setRecordSeparatorPolicy(transactionRecordSeparatorPolicy());
         reader.setLineMapper(new TransactionLineMapper(filename));
         return reader;
+    }
+
+    @Bean
+    @StepScope
+    public RecordSeparatorPolicy transactionRecordSeparatorPolicy() {
+        return new ComplexJsonRecordSeparatorPolicy();
     }
 
 	@Bean

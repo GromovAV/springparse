@@ -70,10 +70,10 @@ public class Transaction{
     public String toString() {
         String stringAmount = " amount: " + amount + ",";
         if (amount == -1) stringAmount = "";
-        String  stringOrderId = "id: " + orderid+",";
+        String  stringOrderId = "id: " + orderid + ",";
         if (orderid == -1) stringOrderId= "";
 
         return "{" + stringOrderId + stringAmount + " comment: "  + comment  +
-        ", filename: " + filename + ", line: " + line + ", result:" + result + "}";
+        ", filename: " + filename + ", line: " + line + ", result: " + result + "}";
     }
 }

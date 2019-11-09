@@ -15,9 +15,10 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
 
     @Override
     public Transaction mapLine(String line, int lineNumber){
+        if(line.isEmpty()) return null;
         String[] fields = line.split(",");
         ArrayList<String> fieldList = new ArrayList<>();
-        String resultError = " ";
+        StringBuilder resultError = new StringBuilder();
 
         for (int i = 0; i < fields.length; i++) {
             fieldList.add(fields[i]
@@ -34,7 +35,7 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
             transaction.setOrderid(Integer.parseInt(fieldList.get(0).trim()));
         }
         catch (Exception e){
-            resultError += "Ошибка в исходном файле orderId = " + fieldList.get(0);
+            resultError.append("Ошибка orderId =" + fieldList.get(0));
         }
 
         try{
@@ -42,7 +43,7 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
         }
         catch (Exception e){
             transaction.setCurrency("Not currency");
-            resultError += "Ошибка в исходном файле currency = Not currency ";
+            resultError.append("Ошибка currency = Not currency ");
         }
 
         try{
@@ -50,7 +51,7 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
         }
         catch (Exception e){
             transaction.setComment("Not comment");
-            resultError += "Ошибка в исходном файле comment = Not comment ";
+            resultError.append("Ошибка comment = Not comment ");
         }
 
         transaction.setLine(lineNumber);
@@ -63,18 +64,18 @@ public class TransactionLineMapper implements LineMapper<Transaction> {
         }
         catch (Exception e){
             if(fieldList.size() >= 2){
-                resultError += "Ошибка в исходном файле amount = " + fieldList.get(1);
+                resultError.append("Ошибка amount =" + fieldList.get(1));
             }
             else {
-                resultError += "Ошибка в исходном файле amount = Not amount ";
+                resultError.append("Ошибка amount = Not amount ");
             }
         }
 
-        if(resultError.equals(" ")){
+        if(resultError.length() == 0){
             transaction.setResult("OK");
         }
         else {
-            transaction.setResult(resultError);
+            transaction.setResult(resultError.toString());
         }
 
         return  transaction;
